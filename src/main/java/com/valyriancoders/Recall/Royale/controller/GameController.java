@@ -7,8 +7,9 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/game")
-@CrossOrigin // helpful if you host UI elsewhere later
+@CrossOrigin
 public class GameController {
+
 
     private final GameService svc;
     public GameController(GameService svc) { this.svc = svc; }
