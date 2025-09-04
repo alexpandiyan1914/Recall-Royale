@@ -134,6 +134,7 @@ public class GameService {
             }
         }
 
+
         Collections.shuffle(keys, rnd);
 
         // fill normal tiles
