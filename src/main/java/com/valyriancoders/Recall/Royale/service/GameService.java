@@ -68,6 +68,13 @@ public class GameService {
             return new FlipResponse("FIRST", new int[]{index}, game);
         } else {
             // second pick
+            // ---------- NEW CHECK ----------
+            if (first == index) {
+                // clicked the same tile twice → ignore, don't advance turn
+                return new FlipResponse("IGNORED", new int[]{index}, game);
+            }
+            // ------------------------------
+
             Tile t1 = game.getTiles().get(first);
             t.setFaceUp(true);
 
@@ -92,6 +99,7 @@ public class GameService {
             }
         }
     }
+
 
     public Game hidePending() {
         if (game.getPendingHide() != null) {

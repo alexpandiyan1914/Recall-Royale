@@ -9,5 +9,4 @@ public class RecallRoyaleApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(RecallRoyaleApplication.class, args);
 	}
-
 }

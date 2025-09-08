@@ -1,60 +1,106 @@
+<!--<!DOCTYPE html>-->
+<!--<html>-->
+<!--<head>-->
+<!--    <meta charset="UTF-8" />-->
+<!--    <title>Recall Royale</title>-->
+<!--    <link rel="stylesheet" href="index.css">-->
+<!--</head>-->
+<!--<body>-->
+<!--<div class="wrap">-->
+
+<!--    &lt;!&ndash; corners &ndash;&gt;-->
+<!--    <div class="corner tl" id="p0">P1: -</div>-->
+<!--    <div class="corner tr" id="p1">P2: -</div>-->
+<!--    <div class="corner bl" id="p2">P3: -</div>-->
+<!--    <div class="corner br" id="p3">P4: -</div>-->
+
+<!--    &lt;!&ndash; center board &ndash;&gt;-->
+<!--    <div>-->
+<!--        <div class="turn" id="turnTxt">Welcome to Recall Royale</div>-->
+<!--        <div id="board"></div>-->
+<!--        <div class="winner" id="winner"></div>-->
+<!--    </div>-->
+
+<!--    &lt;!&ndash; left control panel &ndash;&gt;-->
+<!--    <div class="controls">-->
+<!--        <div class="card">-->
+<!--            <strong>Setup</strong>-->
+<!--            <select id="sizeSel">-->
+<!--                <option value="6">6 × 6 (Easy)</option>-->
+<!--                <option value="9">9 × 9 (Hard)</option>-->
+<!--            </select>-->
+<!--            <select id="modeSel">-->
+<!--                <option value="LETTERS">Letters</option>-->
+<!--                <option value="IMAGES">Images (IDs)</option>-->
+<!--            </select>-->
+<!--            <button onclick="createGame()">Create Game</button>-->
+<!--            <button onclick="start()" id="startBtn" disabled>Start</button>-->
+<!--        </div>-->
+
+<!--        <div class="card">-->
+<!--            <strong>Players</strong>-->
+<!--            <input id="n1" placeholder="Player 1 name"/>-->
+<!--            <input id="n2" placeholder="Player 2 name"/>-->
+<!--            <input id="n3" placeholder="Player 3 name"/>-->
+<!--            <input id="n4" placeholder="Player 4 name"/>-->
+<!--            <button onclick="joinAll()">Add Players</button>-->
+<!--        </div>-->
+<!--    </div>-->
+
+<!--</div>-->
+
+<!--&lt;!&ndash; Sound Effects &ndash;&gt;-->
+<!--<audio id="clickSound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>-->
+<!--<audio id="matchSound" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg"></audio>-->
+<!--<audio id="mismatchSound" src="https://actions.google.com/sounds/v1/cartoon/woodpecker_pecking.ogg"></audio>-->
+<!--<audio id="winSound" src="https://actions.google.com/sounds/v1/cartoon/slide_whistle_to_drum.ogg"></audio>-->
+
+<!--<script src="index.js"></script>-->
+<!--</body>-->
+<!--</html>-->
+
+
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8" />
-    <title>Recall Royale</title>
-    <link rel="stylesheet" href="index.css">
+    <meta charset="utf-8" />
+    <title>Recall Royale — Setup</title>
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-<div class="wrap">
+<div class="wrap-setup">
+    <h1 class="logo">Recall Royale</h1>
 
-    <!-- corners -->
-    <div class="corner tl" id="p0">P1: -</div>
-    <div class="corner tr" id="p1">P2: -</div>
-    <div class="corner bl" id="p2">P3: -</div>
-    <div class="corner br" id="p3">P4: -</div>
+    <div class="card setup-card">
+        <label>Tile Resolution</label>
+        <select id="tileSize">
+            <option value="4">4 × 4</option>
+            <option value="6" selected>6 × 6</option>
+            <option value="9">9 × 9</option>
+        </select>
 
-    <!-- center board -->
-    <div>
-        <div class="turn" id="turnTxt">Welcome to Recall Royale</div>
-        <div id="board"></div>
-        <div class="winner" id="winner"></div>
-    </div>
+        <label>Game Mode</label>
+        <select id="gameMode">
+            <option value="LETTERS">Letters</option>
+            <option value="IMAGES">Images</option>
+        </select>
 
-    <!-- left control panel -->
-    <div class="controls">
-        <div class="card">
-            <strong>Setup</strong>
-            <select id="sizeSel">
-                <option value="6">6 × 6 (Easy)</option>
-                <option value="9">9 × 9 (Hard)</option>
-            </select>
-            <select id="modeSel">
-                <option value="LETTERS">Letters</option>
-                <option value="IMAGES">Images (IDs)</option>
-            </select>
-            <button onclick="createGame()">Create Game</button>
-            <button onclick="start()" id="startBtn" disabled>Start</button>
-        </div>
+        <label>Players</label>
+        <select id="playerCount">
+            <option value="2">2 Players</option>
+            <option value="4">4 Players</option>
+        </select>
 
-        <div class="card">
-            <strong>Players</strong>
-            <input id="n1" placeholder="Player 1 name"/>
-            <input id="n2" placeholder="Player 2 name"/>
-            <input id="n3" placeholder="Player 3 name"/>
-            <input id="n4" placeholder="Player 4 name"/>
-            <button onclick="joinAll()">Add Players</button>
+        <div id="playerInputs" class="player-inputs"></div>
+
+        <div class="row">
+            <button id="btnCreateStart">Start Game</button>
         </div>
     </div>
 
+    <div class="foot">Use Images mode to show pictures, Letters mode to show alphabets.</div>
 </div>
 
-<!-- Sound Effects -->
-<audio id="clickSound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
-<audio id="matchSound" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg"></audio>
-<audio id="mismatchSound" src="https://actions.google.com/sounds/v1/cartoon/woodpecker_pecking.ogg"></audio>
-<audio id="winSound" src="https://actions.google.com/sounds/v1/cartoon/slide_whistle_to_drum.ogg"></audio>
-
-<script src="index.js"></script>
+<script src="js/setup.js"></script>
 </body>
 </html>
