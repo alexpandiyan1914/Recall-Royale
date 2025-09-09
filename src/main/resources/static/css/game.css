@@ -1,0 +1,151 @@
+/* ====== Global Dark Futuristic Palette ====== */
+:root {
+  --bg1: #0f1220;
+  --bg2: #1a1f40;
+  --panel: #151b36;
+  --accent: #00a3ff;
+  --accent2: #21c55d;
+  --muted: #2b3566;
+  --glass: rgba(255,255,255,0.04);
+  --pink: #ff40d4;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, var(--bg1), var(--bg2));
+  color: #fff;
+  overflow-x: hidden;
+}
+
+/* ====== Top Player Strip ====== */
+.topbar {
+  position: fixed;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 120px);
+  max-width: 1100px;
+  z-index: 50;
+  animation: fadeDown 0.8s ease;
+}
+
+.players-strip {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px;
+  background: var(--glass);
+  border-radius: 12px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+}
+
+.player-pill {
+  flex: 1;
+  min-width: 130px;
+  background: var(--panel);
+  padding: 10px 14px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+}
+
+.player-pill .name {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.player-pill.active {
+  border: 1px solid var(--accent);
+  transform: scale(1.05);
+  box-shadow: 0 0 18px rgba(0,163,255,0.4);
+}
+
+/* ====== Center Area ====== */
+.center-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-top: 120px;
+  min-height: 100vh;
+  gap: 15px;
+}
+
+.turn-txt {
+  font-size: 22px;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* ====== Board Tiles ====== */
+.board {
+  display: grid;
+  gap: 25px;
+  margin-top: 14px;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  max-width: 700px;
+}
+
+.tile {
+  width: 90px;
+  height: 90px;
+  border-radius: 12px;
+  background: var(--muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 22px;
+  cursor: pointer;
+  color: #fff;
+  transition: transform .25s ease, box-shadow .25s ease, background .25s ease;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.5);
+  user-select: none;
+}
+
+.tile:hover {
+  transform: scale(1.08) translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,163,255,0.5);
+}
+
+.tile.faceup {
+  background: var(--accent);
+  transform: rotateY(2deg) scale(1.05);
+  color: #071224;
+  box-shadow: 0 0 20px rgba(0,163,255,0.4);
+}
+
+.tile.matched {
+  background: var(--accent2);
+  transform: scale(1.12);
+  box-shadow: 0 0 25px rgba(33,197,93,0.35);
+}
+
+/* ====== Winner Message ====== */
+.winner-msg {
+  font-size: 26px;
+  font-weight: 700;
+  margin-top: 20px;
+  color: var(--accent2);
+  animation: bounce 1s infinite;
+}
+
+/* ====== Animations ====== */
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes fadeDown {
+  0% { opacity: 0; transform: translate(-50%, -20px); }
+  100% { opacity: 1; transform: translate(-50%, 0); }
+}
