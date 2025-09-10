@@ -386,6 +386,52 @@ function updateTileButton(btn, tile, mode) {
   }
 }
 
+//// =========================
+//// RENDER BOARD
+//// =========================
+//function renderBoard(state) {
+//  latestState = state;
+//  winnerMsg.textContent = '';
+//
+//  if (state.status === 'RUNNING') {
+//    const p = state.players[state.currentPlayerIdx];
+//    turnTxt.textContent = `Turn: ${p ? p.name : '—'}`;
+//  } else if (state.status === 'FINISHED') {
+//    turnTxt.textContent = 'Game Over';
+//    const best = [...state.players].filter(Boolean).sort((a,b)=>b.score-a.score)[0];
+//    if (best) localStorage.setItem('recall_winner', best.name);
+//    setTimeout(()=> location.href = 'winner.html', 800);
+//    playSound('winSound');
+//    return;
+//  } else {
+//    turnTxt.textContent = 'Lobby';
+//  }
+//
+//  renderPlayers(state);
+//  setGrid(state.cols);
+//
+//  // build buttons once
+//  if (boardEl.children.length === 0) {
+//    state.tiles.forEach(t => {
+//      const btn = document.createElement('button');
+//      btn.onclick = () => onTileClick(t.index);
+//      boardEl.appendChild(btn);
+//    });
+//  }
+//
+//  // update only changed tiles
+//  state.tiles.forEach((t, i) => {
+//    const prev = prevTiles ? prevTiles[i] : null;
+//    if (!prev || JSON.stringify(prev) !== JSON.stringify(t)) {
+//      const btn = boardEl.children[i];
+//      btn.onclick = () => onTileClick(t.index);
+//      updateTileButton(btn, t, state.mode);
+//    }
+//  });
+//
+//  prevTiles = JSON.parse(JSON.stringify(state.tiles));
+//}
+
 // =========================
 // RENDER BOARD
 // =========================
@@ -399,7 +445,13 @@ function renderBoard(state) {
   } else if (state.status === 'FINISHED') {
     turnTxt.textContent = 'Game Over';
     const best = [...state.players].filter(Boolean).sort((a,b)=>b.score-a.score)[0];
-    if (best) localStorage.setItem('recall_winner', best.name);
+    if (best) {
+      localStorage.setItem('recall_winner', best.name);
+
+      //  Save winner to backend DB
+      saveWinnerToDB(best.name, best.score);
+    }
+
     setTimeout(()=> location.href = 'winner.html', 800);
     playSound('winSound');
     return;
@@ -431,6 +483,23 @@ function renderBoard(state) {
 
   prevTiles = JSON.parse(JSON.stringify(state.tiles));
 }
+
+// =========================
+// SAVE WINNER TO DB
+// =========================
+function saveWinnerToDB(playerName, score) {
+  fetch(`${API}/winner?playerName=${encodeURIComponent(playerName)}&score=${score}`, {
+    method: "POST"
+  })
+  .then(res => res.text())
+  .then(msg => {
+    console.log(" Winner saved:", msg);
+  })
+  .catch(err => {
+    console.error("Error saving winner:", err);
+  });
+}
+
 
 // =========================
 // SOUNDS

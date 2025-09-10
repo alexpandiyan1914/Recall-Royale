@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Leaderboard — Recall Royale</title>
+    <link rel="stylesheet" href="css/leaderboard.css">
+    <style>
+        body { font-family: Arial, sans-serif; background: #f9f9f9; }
+        .wrap-leaderboard { width: 60%; margin: 50px auto; text-align: center; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ccc; }
+        th { background: #eee; }
+    </style>
+</head>
+<body>
+<div class="wrap-leaderboard">
+    <h2>🏆 Leaderboard</h2>
+    <table id="leaderTable">
+        <thead>
+        <tr><th>Rank</th><th>Player</th><th>Score</th><th>Date</th></tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+</div>
+
+<script>
+    fetch("http://localhost:8080/api/game/leaderboard")
+        .then(res => res.json())
+        .then(data => {
+            let tbody = document.querySelector("#leaderTable tbody");
+            tbody.innerHTML = ""; // clear before appending
+            if (!data || data.length === 0) {
+                let tr = document.createElement("tr");
+                tr.innerHTML = `<td colspan="4">No leaderboard entries yet</td>`;
+                tbody.appendChild(tr);
+                return;
+            }
+
+            data.forEach((row, idx) => {
+                let tr = document.createElement("tr");
+                let date = row.createdAt ? new Date(row.createdAt).toLocaleString() : "-";
+                tr.innerHTML = `
+                    <td>${idx + 1}</td>
+                    <td>${row.playerName}</td>
+                    <td>${row.score}</td>
+                    <td>${date}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        })
+        .catch(err => {
+            console.error("Error loading leaderboard:", err);
+            let tbody = document.querySelector("#leaderTable tbody");
+            tbody.innerHTML = `<tr><td colspan="4">Error loading leaderboard</td></tr>`;
+        });
+</script>
+</body>
+</html>
