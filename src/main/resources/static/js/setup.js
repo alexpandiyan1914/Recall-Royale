@@ -1,11 +1,72 @@
-// setup.js
-// Creates game on backend and joins players, then redirects to countdown.html
+//// setup.js
+//// Creates game on backend and joins players, then redirects to countdown.html
+//
+//const API = '/api/game';
+//const playerCount = document.getElementById('playerCount');
+//const playerInputs = document.getElementById('playerInputs');
+//const btnCreateStart = document.getElementById('btnCreateStart');
+//
+//function renderPlayerInputs() {
+//  const count = parseInt(playerCount.value, 10);
+//  playerInputs.innerHTML = '';
+//  for (let i = 1; i <= count; i++) {
+//    const input = document.createElement('input');
+//    input.id = `playerName${i}`;
+//    input.placeholder = `Player ${i} name`;
+//    input.style.width = '100%';
+//    playerInputs.appendChild(input);
+//  }
+//}
+//playerCount.addEventListener('change', renderPlayerInputs);
+//renderPlayerInputs();
+//
+//btnCreateStart.addEventListener('click', async () => {
+//  try {
+//    const size = parseInt(document.getElementById('tileSize').value, 10);
+//    const modeSel = document.getElementById('gameMode').value;
+//    // backend expects "LETTERS" or "IMAGES"
+//    const mode = (modeSel === 'IMAGES' || modeSel === 'Images' || modeSel === 'images') ? 'IMAGES' : 'LETTERS';
+//
+//    // Create game on backend
+//    await fetch(API + '/create', {
+//      method: 'POST',
+//      headers: { 'Content-Type': 'application/json' },
+//      body: JSON.stringify({ rows: size, cols: size, mode })
+//    });
+//
+//    // join players
+//    const count = parseInt(playerCount.value, 10);
+//    const names = [];
+//    for (let i = 1; i <= count; i++) {
+//      const nm = document.getElementById(`playerName${i}`).value.trim() || `Player ${i}`;
+//      names.push(nm);
+//      await fetch(API + '/join', {
+//        method: 'POST',
+//        headers: { 'Content-Type': 'application/json' },
+//        body: JSON.stringify({ name: nm })
+//      });
+//    }
+//
+//    // save client-side config for later pages
+//    localStorage.setItem('recall_cfg', JSON.stringify({ rows: size, cols: size, mode, players: names }));
+//    // go to countdown page
+//    location.href = 'countdown.html';
+//  } catch (err) {
+//    console.error('setup error', err);
+//    alert('Failed to create/join game. Check backend.');
+//  }
+//});
 
 const API = '/api/game';
 const playerCount = document.getElementById('playerCount');
 const playerInputs = document.getElementById('playerInputs');
 const btnCreateStart = document.getElementById('btnCreateStart');
 
+const gameModeSel = document.getElementById('gameMode');
+const imgCategoryLabel = document.getElementById('imgCategoryLabel');
+const imgCategorySel = document.getElementById('imgCategorySel');
+
+// render player inputs dynamically
 function renderPlayerInputs() {
   const count = parseInt(playerCount.value, 10);
   playerInputs.innerHTML = '';
@@ -20,14 +81,25 @@ function renderPlayerInputs() {
 playerCount.addEventListener('change', renderPlayerInputs);
 renderPlayerInputs();
 
+// toggle category dropdown if mode=IMAGES
+gameModeSel.addEventListener('change', () => {
+  if (gameModeSel.value === 'IMAGES') {
+    imgCategoryLabel.style.display = 'block';
+    imgCategorySel.style.display = 'block';
+  } else {
+    imgCategoryLabel.style.display = 'none';
+    imgCategorySel.style.display = 'none';
+  }
+});
+
 btnCreateStart.addEventListener('click', async () => {
   try {
     const size = parseInt(document.getElementById('tileSize').value, 10);
-    const modeSel = document.getElementById('gameMode').value;
-    // backend expects "LETTERS" or "IMAGES"
-    const mode = (modeSel === 'IMAGES' || modeSel === 'Images' || modeSel === 'images') ? 'IMAGES' : 'LETTERS';
+    const modeSel = gameModeSel.value;
+    const mode = (modeSel === 'IMAGES') ? 'IMAGES' : 'LETTERS';
+    const category = (mode === 'IMAGES') ? imgCategorySel.value : null;
 
-    // Create game on backend
+    // create game on backend
     await fetch(API + '/create', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -47,12 +119,12 @@ btnCreateStart.addEventListener('click', async () => {
       });
     }
 
-    // save client-side config for later pages
-    localStorage.setItem('recall_cfg', JSON.stringify({ rows: size, cols: size, mode, players: names }));
-    // go to countdown page
+    // ✅ save category in localStorage
+    localStorage.setItem('recall_cfg', JSON.stringify({ rows: size, cols: size, mode, category, players: names }));
     location.href = 'countdown.html';
   } catch (err) {
     console.error('setup error', err);
     alert('Failed to create/join game. Check backend.');
   }
 });
+
