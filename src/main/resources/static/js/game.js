@@ -333,15 +333,21 @@ let pollInterval = null;
 // =========================
 function renderPlayers(state) {
   playersStrip.innerHTML = '';
-  for (let i = 0; i < 4; i++) {
+  const totalPlayers = state.players.filter(p => p).length;
+
+  for (let i = 0; i < totalPlayers; i++) {
     const pill = document.createElement('div');
     pill.className = 'player-pill';
+
     if (state.players[i]) {
-      pill.innerHTML = `<div class="name">${state.players[i].name}</div><div class="score">${state.players[i].score}</div>`;
-    } else {
-      pill.innerHTML = `<div class="name">P${i+1}</div><div class="score">-</div>`;
+      pill.innerHTML = `<div class="name">${state.players[i].name}</div>
+                        <div class="score">${state.players[i].score}</div>`;
     }
-    if (i === state.currentPlayerIdx && state.status === 'RUNNING') pill.classList.add('active');
+
+    if (i === state.currentPlayerIdx && state.status === 'RUNNING') {
+      pill.classList.add('active');
+    }
+
     playersStrip.appendChild(pill);
   }
 }

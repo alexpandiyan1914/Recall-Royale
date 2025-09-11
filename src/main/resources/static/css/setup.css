@@ -1,6 +1,6 @@
 body {
   margin: 0;
-  font-family: system-ui, Arial;
+  font-family: "Inter", system-ui, Arial, sans-serif;
   background: #0f1220;
   color: #fff;
 }
@@ -19,44 +19,74 @@ body {
   font-weight: 700;
   color: #00a3ff;
   margin-bottom: 10px;
+  letter-spacing: 1px;
+  text-align: center;
 }
 
 .setup-card {
   background: #1b2140;
-  border-radius: 14px;
-  padding: 24px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
-  width: 380px;
+  border-radius: 16px;
+  padding: 28px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  width: 400px;
 }
 
 .setup-card label {
   font-weight: 600;
   display: block;
-  margin-top: 10px;
+  margin-top: 14px;
+  margin-bottom: 6px;
+  color: #b8c1ec;
+  font-size: 14px;
 }
 
-input, select, button {
+/* === FIXED ALIGNMENT FOR ALL INPUTS === */
+input,
+select,
+button {
   width: 100%;
-  padding: 10px;
-  margin-top: 8px;
-  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: 10px;
+  border-radius: 12px;
   border: none;
   font-size: 15px;
+  outline: none;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  display: block;
 }
 
-input, select {
+input,
+select {
   background: #2b3566;
   color: #fff;
+  border: 1px solid transparent;
 }
 
+input:focus,
+select:focus {
+  border: 1px solid #00a3ff;
+  background: #323b6e;
+}
+
+/* Button styling */
 button {
   background: #5865f2;
   color: #fff;
   font-weight: 700;
   cursor: pointer;
-  transition: 0.2s ease;
+  margin-top: 20px;
+  letter-spacing: 0.5px;
 }
 
 button:hover {
   background: #4752c4;
+}
+
+/* Small footer text */
+.footer-note {
+  font-size: 13px;
+  color: #b8c1ec;
+  margin-top: 16px;
+  text-align: center;
 }
