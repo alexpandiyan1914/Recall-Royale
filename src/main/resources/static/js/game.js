@@ -431,6 +431,10 @@ function updateTileButton(btn, tile, mode) {
 //
 //  prevTiles = JSON.parse(JSON.stringify(state.tiles));
 //}
+// =========================
+// GLOBALS
+// =========================
+let winnerSaved = false; // 🚀 Prevent duplicate saves
 
 // =========================
 // RENDER BOARD
@@ -444,15 +448,16 @@ function renderBoard(state) {
     turnTxt.textContent = `Turn: ${p ? p.name : '—'}`;
   } else if (state.status === 'FINISHED') {
     turnTxt.textContent = 'Game Over';
-    const best = [...state.players].filter(Boolean).sort((a,b)=>b.score-a.score)[0];
-    if (best) {
+    const best = [...state.players].filter(Boolean).sort((a, b) => b.score - a.score)[0];
+    if (best && !winnerSaved) {
       localStorage.setItem('recall_winner', best.name);
 
-      //  Save winner to backend DB
+      //  Save winner to backend DB (only once)
       saveWinnerToDB(best.name, best.score);
+      winnerSaved = true; // ✅ ensure only one save
     }
 
-    setTimeout(()=> location.href = 'winner.html', 800);
+    setTimeout(() => location.href = 'winner.html', 800);
     playSound('winSound');
     return;
   } else {
@@ -491,13 +496,13 @@ function saveWinnerToDB(playerName, score) {
   fetch(`${API}/winner?playerName=${encodeURIComponent(playerName)}&score=${score}`, {
     method: "POST"
   })
-  .then(res => res.text())
-  .then(msg => {
-    console.log(" Winner saved:", msg);
-  })
-  .catch(err => {
-    console.error("Error saving winner:", err);
-  });
+    .then(res => res.text())
+    .then(msg => {
+      console.log(" Winner saved:", msg);
+    })
+    .catch(err => {
+      console.error("Error saving winner:", err);
+    });
 }
 
 

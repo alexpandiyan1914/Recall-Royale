@@ -1,15 +1,103 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8" />
     <title>Leaderboard — Recall Royale</title>
-    <link rel="stylesheet" href="css/leaderboard.css">
     <style>
-        body { font-family: Arial, sans-serif; background: #f9f9f9; }
-        .wrap-leaderboard { width: 60%; margin: 50px auto; text-align: center; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 10px; border: 1px solid #ccc; }
-        th { background: #eee; }
+        :root {
+          --bg1: #0f1220;
+          --bg2: #1a1f40;
+          --panel: #151b36;
+          --accent: #00a3ff;
+          --accent2: #21c55d;
+          --muted: #2b3566;
+          --glass: rgba(255,255,255,0.04);
+          --pink: #ff40d4;
+        }
+
+        body {
+          font-family: "Segoe UI", Arial, sans-serif;
+          background: linear-gradient(135deg, var(--bg1), var(--bg2));
+          margin: 0;
+          padding: 0;
+          color: #fff;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+        }
+
+        .wrap-leaderboard {
+          background: var(--panel);
+          width: 70%;
+          max-width: 900px;
+          padding: 30px;
+          border-radius: 16px;
+          box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+          backdrop-filter: blur(12px);
+          border: 1px solid var(--glass);
+          text-align: center;
+          animation: fadeIn 1s ease;
+        }
+
+        h2 {
+          font-size: 2rem;
+          margin-bottom: 20px;
+          color: var(--accent);
+          text-shadow: 0 0 8px rgba(0,163,255,0.6);
+        }
+
+        table {
+          width: 100%;
+          border-collapse: collapse;
+          border-radius: 10px;
+          overflow: hidden;
+        }
+
+        thead {
+          background: var(--muted);
+        }
+
+        th, td {
+          padding: 14px 12px;
+          text-align: center;
+        }
+
+        th {
+          text-transform: uppercase;
+          font-weight: 600;
+          color: var(--accent);
+          font-size: 0.9rem;
+          letter-spacing: 1px;
+        }
+
+        tbody tr {
+          background: var(--glass);
+          transition: background 0.3s ease;
+        }
+
+        tbody tr:nth-child(even) {
+          background: rgba(255,255,255,0.02);
+        }
+
+        tbody tr:hover {
+          background: var(--muted);
+        }
+
+        td {
+          color: #f1f1f1;
+          font-size: 0.95rem;
+        }
+
+        td:nth-child(1) {
+          font-weight: bold;
+          color: var(--accent2);
+        }
+
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(20px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
@@ -25,34 +113,33 @@
 
 <script>
     fetch("http://localhost:8080/api/game/leaderboard")
-        .then(res => res.json())
-        .then(data => {
-            let tbody = document.querySelector("#leaderTable tbody");
-            tbody.innerHTML = ""; // clear before appending
-            if (!data || data.length === 0) {
-                let tr = document.createElement("tr");
-                tr.innerHTML = `<td colspan="4">No leaderboard entries yet</td>`;
-                tbody.appendChild(tr);
-                return;
-            }
-
-            data.forEach((row, idx) => {
-                let tr = document.createElement("tr");
-                let date = row.createdAt ? new Date(row.createdAt).toLocaleString() : "-";
-                tr.innerHTML = `
-                    <td>${idx + 1}</td>
-                    <td>${row.playerName}</td>
-                    <td>${row.score}</td>
-                    <td>${date}</td>
-                `;
-                tbody.appendChild(tr);
-            });
-        })
-        .catch(err => {
-            console.error("Error loading leaderboard:", err);
-            let tbody = document.querySelector("#leaderTable tbody");
-            tbody.innerHTML = `<tr><td colspan="4">Error loading leaderboard</td></tr>`;
+      .then(res => res.json())
+      .then(data => {
+        let tbody = document.querySelector("#leaderTable tbody");
+        tbody.innerHTML = "";
+        if (!data || data.length === 0) {
+          let tr = document.createElement("tr");
+          tr.innerHTML = `<td colspan="4">No leaderboard entries yet</td>`;
+          tbody.appendChild(tr);
+          return;
+        }
+        data.forEach((row, idx) => {
+          let tr = document.createElement("tr");
+          let date = row.createdAt ? new Date(row.createdAt).toLocaleString() : "-";
+          tr.innerHTML = `
+            <td>${idx + 1}</td>
+            <td>${row.playerName}</td>
+            <td>${row.score}</td>
+            <td>${date}</td>
+          `;
+          tbody.appendChild(tr);
         });
+      })
+      .catch(err => {
+        console.error("Error loading leaderboard:", err);
+        let tbody = document.querySelector("#leaderTable tbody");
+        tbody.innerHTML = `<tr><td colspan="4">Error loading leaderboard</td></tr>`;
+      });
 </script>
 </body>
 </html>
