@@ -33,7 +33,13 @@ const imageCategories = {
     "img_22": "images/actors/pradeep.jpg",
     "img_23": "images/actors/santhanam.jpg",
     "img_24": "images/actors/vadivelu.jpg",
-    "img_25": "images/actors/vivek.jpg"
+    "img_25": "images/actors/arjun.jpeg",
+    "img_26": "images/actors/arya.jpeg",
+    "img_27": "images/actors/ashokselvan.jpeg",
+    "img_28": "images/actors/harish_kalyan.jpeg",
+    "img_30": "images/actors/kavin.jpeg",
+    "img_31": "images/actors/siddharth.jpeg",
+    "img_32": "images/actors/vishnu.jpeg"
   },
   LOGOS: {
     "img_01": "images/logos/Accenture.png",
