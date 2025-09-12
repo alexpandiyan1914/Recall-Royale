@@ -303,10 +303,51 @@ const imageCategories = {
     "img_38": "images/OnePiece/whitebeard.jpeg",
     "img_39": "images/OnePiece/yamato.jpg",
     "img_40": "images/OnePiece/Zoro.jpg"
+  },
+  open_source_logos: {
+  "img_01": "images/open_source_logos/springboot.jpg",
+  "img_02": "images/open_source_logos/angular.jpg",
+  "img_03": "images/open_source_logos/arch.jpg",
+  "img_04": "images/open_source_logos/bootstrap.jpg",
+  "img_05": "images/open_source_logos/coquitts.jpg",
+  "img_06": "images/open_source_logos/debian.jpg",
+  "img_07": "images/open_source_logos/django.jpg",
+  "img_08": "images/open_source_logos/docker.jpg",
+  "img_09": "images/open_source_logos/fastapi.jpg",
+  "img_10": "images/open_source_logos/fedora.jpg",
+  "img_11": "images/open_source_logos/flask.jpg",
+  "img_12": "images/open_source_logos/flutter.jpg",
+  "img_13": "images/open_source_logos/huggingface.jpg",
+  "img_14": "images/open_source_logos/kali.jpeg",
+  "img_15": "images/open_source_logos/keras.jpg",
+  "img_16": "images/open_source_logos/langchain.jpg",
+  "img_17": "images/open_source_logos/mediapipe.jpg",
+  "img_18": "images/open_source_logos/mermaid.jpg",
+  "img_19": "images/open_source_logos/metasploit.jpg",
+  "img_20": "images/open_source_logos/mongodb.jpg",
+  "img_21": "images/open_source_logos/neo4j.jpg",
+  "img_22": "images/open_source_logos/nextjs.jpeg",
+  "img_23": "images/open_source_logos/node.jpg",
+  "img_24": "images/open_source_logos/opencv.jpg",
+  "img_25": "images/open_source_logos/pandas.jpg",
+  "img_26": "images/open_source_logos/penpot.jpg",
+  "img_27": "images/open_source_logos/prometheus.jpg",
+  "img_28": "images/open_source_logos/pytorch.jpg",
+  "img_29": "images/open_source_logos/rasa.jpeg",
+  "img_30": "images/open_source_logos/react.jpg",
+  "img_31": "images/open_source_logos/react_native.jpg",
+  "img_32": "images/open_source_logos/spacy.jpg",
+  "img_33": "images/open_source_logos/aircrack.jpeg",
+  "img_34": "images/open_source_logos/tailwind.jpg",
+  "img_35": "images/open_source_logos/tensorflow.jpg",
+  "img_36": "images/open_source_logos/ubuntu.jpg",
+  "img_37": "images/open_source_logos/unreal.jpg",
+  "img_38": "images/open_source_logos/xampp.jpg",
+  "img_39": "images/open_source_logos/zorin.jpg",
+  "img_40": "images/open_source_logos/linux.jpeg"
   }
 };
 
-// ✅ pick correct map
 const imageMap = (cfg.mode === 'IMAGES' && cfg.category && imageCategories[cfg.category])
   ? imageCategories[cfg.category]
   : {};
