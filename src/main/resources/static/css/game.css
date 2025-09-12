@@ -149,3 +149,10 @@ body {
   0% { opacity: 0; transform: translate(-50%, -20px); }
   100% { opacity: 1; transform: translate(-50%, 0); }
 }
+
+.commentary-log .msg {
+  color:white;
+  padding: 8px 10px;
+  font-size: 13px;
+}
+

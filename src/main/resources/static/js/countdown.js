@@ -11,25 +11,28 @@ countEl.textContent = n;
 function playSound(id) {
   const audio = document.getElementById(id);
   if (audio) {
+    audio.pause(); // stop any ongoing playback
     audio.currentTime = 0;
-    audio.play().catch(() => {}); // avoid autoplay errors
+    audio.play().catch(() => {});
   }
 }
 
-const timer = setInterval(async () => {
-  n--;
-
-  if (n <= 0) {
-    clearInterval(timer);
-    playSound("goSound"); // ✅ final "GO!" sound
-    try {
-      await fetch(API + '/start', { method: 'POST' });
-    } catch (err) {
-      console.error('start error', err);
-    }
-    setTimeout(() => { location.href = 'game.html'; }, 800); // delay so sound plays
-  } else {
+function updateCountdown() {
+  if (n > 0) {
+    playSound("tickSound");
     countEl.textContent = n;
-    playSound("tickSound"); // ✅ tick sound each second
+    n--;
+    setTimeout(updateCountdown, 1000);
+  } else {
+    playSound("goSound");
+    countEl.textContent = "GO!";
+    fetch(API + '/start', { method: 'POST' }).catch(err => {
+      console.error('start error', err);
+    });
+    setTimeout(() => {
+      location.href = 'game.html';
+    }, 800); // allow sound to finish
   }
-}, 1000);
+}
+
+setTimeout(updateCountdown, 1000); // initial delay before countdown starts
